@@ -1,4 +1,4 @@
-#!/bin/bASh
+#!/bin/bash
 chcp 65001
 
 sqlite3 movies_rating.db < db_init.sql
@@ -46,8 +46,8 @@ sqlite3 movies_rating.db -box -echo "SELECT Movie, Year, Average_rating, Place F
 
 echo " "
 
-
 echo "8. Определить самый распространенный жанр фильма и количество фильмов в этом жанре."
 echo "--------------------------------------------------"
 sqlite3 movies_rating.db -box -echo "CREATE VIEW T8 AS with t(id,gen,rest) AS(SELECT  id, null, genres FROM movies union all SELECT  id, CASE when instr(rest,'|') = 0 then rest else substr(rest,1,instr(rest,'|')-1) end, CASE WHEN instr(rest,'|')=0 then NULL else substr(rest,instr(rest,'|')+1) end FROM t where rest is not null order by id) SELECT  gen AS 'Genres', count(id) AS 'Number' FROM t WHERE gen is not null group by gen;"
 sqlite3 movies_rating.db -box -echo "SELECT  Genres AS 'The most widespread genre', max(Number) AS 'Number of films' FROM T8;drop view T8;"
+echo " "
